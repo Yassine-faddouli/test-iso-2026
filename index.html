@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prêt pour ISO 9001:2026 ?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/*
+VOICE: calm, expert, reassuring — an auditor's report, not a quiz app.
+IDEA: an audit checklist that turns into a signed readiness report.
+PICTURE: the live score ring + clause checklist; at the end, the report sheet with gaps and countdown.
+COLOUR and TYPE: paper white, ink, one certification blue; Sora headings, Inter text.
+LAYOUT: one calm centred column (max 760px), progress rail on top, report as a sheet.
+*/
+:root{color-scheme:light dark;
+--bg:light-dark(#F4F3EF,#0C0E12);--sheet:light-dark(#FFFFFF,#14171D);--ink:light-dark(#121417,#EDEEF0);
+--mute:light-dark(#5A5F68,#9AA0AA);--line:light-dark(#E2E0DA,#262A32);--blue:light-dark(#1F3FD1,#7D93FF);
+--blue-soft:light-dark(#EAEEFF,#1A2140);--warn:light-dark(#B4410F,#FF9B6B);--ok:light-dark(#127A4B,#5BD39A)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:Sora,Inter,sans-serif;line-height:1.08;text-wrap:balance;margin:0}
+.demo{background:var(--ink);color:var(--bg);font-size:13px;text-align:center;padding:8px 16px}
+header{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px max(5vw,16px);border-bottom:1px solid var(--line);background:var(--sheet)}
+.brand{font-family:Sora;font-weight:600;font-size:15px}.brand small{display:block;font:400 13px Inter;color:var(--mute)}
+.chip{font-size:13px;color:var(--mute);white-space:nowrap}
+main{max-width:760px;margin:0 auto;padding:clamp(24px,5vw,56px) 16px 64px}
+.card{background:var(--sheet);border:1px solid var(--line);border-radius:18px;padding:clamp(22px,4vw,44px);box-shadow:0 1px 0 var(--line),0 24px 48px -32px rgba(0,0,0,.25)}
+.hero h1{font-size:clamp(32px,5vw,48px)}
+.hero p.lead{font-size:18px;color:var(--mute);margin:16px 0 28px;max-width:56ch}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 28px}
+.fact{border:1px solid var(--line);border-radius:12px;padding:14px}.fact b{display:block;font-family:Sora;font-size:22px}.fact span{font-size:13px;color:var(--mute)}
+.seal{display:flex;gap:18px;align-items:center;background:var(--blue-soft);border-radius:14px;padding:16px 18px;margin-bottom:28px}
+.seal svg{flex:none}.seal p{margin:0;font-size:15px}
+button,.btn{font:600 16px Inter;border:0;border-radius:12px;min-height:48px;padding:0 22px;cursor:pointer;background:var(--blue);color:#fff}
+button:focus-visible,input:focus-visible,label.opt:focus-within{outline:3px solid var(--blue);outline-offset:2px}
+button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.rail{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin-bottom:10px}
+.rail i{display:block;height:100%;background:var(--blue);width:0;transition:width .35s ease}
+.meta{display:flex;justify-content:space-between;font-size:13px;color:var(--mute);margin-bottom:22px}
+.q h2{font-size:clamp(22px,3vw,28px);margin-bottom:8px}
+.q .hint{color:var(--mute);margin:0 0 22px;font-size:15px}
+.clause{display:inline-block;font-size:13px;color:var(--blue);background:var(--blue-soft);border-radius:999px;padding:3px 10px;margin-bottom:14px}
+.opts{display:grid;gap:10px;margin-bottom:26px}
+label.opt{display:flex;gap:14px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:14px 16px;cursor:pointer;transition:border-color .15s,background .15s}
+label.opt:hover{border-color:var(--blue)}
+label.opt input{position:absolute;opacity:0;width:1px;height:1px}
+label.opt .dot{flex:none;width:20px;height:20px;border-radius:50%;border:2px solid var(--line);margin-top:2px}
+label.opt.on{border-color:var(--blue);background:var(--blue-soft)}label.opt.on .dot{border:6px solid var(--blue)}
+.nav{display:flex;justify-content:space-between;gap:12px}
+.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:22px 0}
+.form label{font-size:14px;font-weight:500;display:grid;gap:6px}
+.form input[type=text],.form input[type=email],.form input[type=tel]{font:16px Inter;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--sheet);color:var(--ink);min-height:48px}
+.consent{grid-column:1/-1;display:flex!important;grid-template-columns:none;gap:10px!important;align-items:flex-start;font-weight:400!important;color:var(--mute)}
+.consent input{margin-top:4px;width:18px;height:18px}
+.err{color:var(--warn);font-size:14px;min-height:20px}
+.sheet-head{display:flex;justify-content:space-between;gap:24px;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:24px}
+.sheet-head h1{font-size:clamp(26px,4vw,36px)}.sheet-head p{color:var(--mute);margin:8px 0 0}
+.ring{position:relative;width:168px;height:168px;flex:none}.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .val{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.ring b{font-family:Sora;font-size:44px;line-height:1}.ring span{display:block;font-size:13px;color:var(--mute)}
+.ring circle.prog{transition:stroke-dashoffset 1.1s cubic-bezier(.2,.7,.2,1)}
+.level{display:inline-block;font-weight:600;font-size:14px;padding:4px 12px;border-radius:999px;margin-top:12px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:24px}
+.stat{border:1px solid var(--line);border-radius:12px;padding:16px}.stat b{font-family:Sora;font-size:28px;display:block;white-space:nowrap}.stat span{font-size:14px;color:var(--mute)}
+h3{font-size:19px;margin:6px 0 14px}
+.bars{display:grid;gap:12px;margin-bottom:28px}
+.bar{display:grid;grid-template-columns:minmax(0,1fr) 120px 44px;gap:12px;align-items:center;font-size:15px}
+.bar .t{height:8px;background:var(--line);border-radius:8px;overflow:hidden}.bar .t i{display:block;height:100%;border-radius:8px}
+.bar em{font-style:normal;text-align:right;color:var(--mute);font-size:14px}
+.gaps{display:grid;gap:12px;margin-bottom:28px;padding:0;list-style:none}
+.gaps li{border-left:3px solid var(--warn);background:light-dark(#FBF4EF,#1E1712);border-radius:0 12px 12px 0;padding:14px 16px}
+.gaps b{display:block;margin-bottom:4px}.gaps span{color:var(--mute);font-size:15px}
+.reco{background:var(--ink);color:var(--bg);border-radius:16px;padding:24px;margin-bottom:20px}
+.reco h3{margin:0 0 8px}.reco p{margin:0 0 18px;opacity:.85}
+.reco button{background:var(--bg);color:var(--ink)}
+.slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:16px 0}
+.slots button{background:var(--sheet);color:var(--ink);border:1px solid var(--line);font-weight:500}
+.slots button.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.lead-card{border:1px dashed var(--blue);border-radius:14px;padding:20px;margin-top:20px}
+.lead-card table{width:100%;border-collapse:collapse;font-size:15px}.lead-card td{padding:8px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.lead-card td:first-child{color:var(--mute);width:40%}
+.small{font-size:13px;color:var(--mute)}
+.hide{display:none!important}
+.fade{animation:fade .35s ease both}@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.fade{animation:none}.rail i,.ring circle.prog{transition:none}}
+@media(max-width:600px){.facts{grid-template-columns:1fr 1fr 1fr}.form,.grid2{grid-template-columns:1fr}.bar{grid-template-columns:minmax(0,1fr) 70px 40px}.slots{grid-template-columns:1fr 1fr}.sheet-head{justify-content:center;text-align:center}.chip{display:none}}
+</style>
+</head>
+<body>
+<div class="demo">Démo préparée par Aura Acquisition pour Alternance Consulting International · aucune donnée n'est envoyée</div>
+<header>
+<div class="brand">Alternance Consulting International<small>Apprendre &amp; Transmettre</small></div>
+<div class="chip">Diagnostic en ligne · ISO 9001:2026</div>
+</header>
+<main id="app"></main>
+
+<script>
+{
+const DEADLINE = new Date('2029-09-30T23:59:59');
+const PROFILE = [
+ {id:'sector',q:"Dans quel secteur évolue votre entreprise ?",o:["Industrie","Agroalimentaire","BTP","Transport et logistique","Santé","Services"]},
+ {id:'size',q:"Combien de collaborateurs ?",o:["Moins de 50","50 à 249","250 à 999","1 000 et plus"]},
+ {id:'status',q:"Où en est votre certification ISO 9001 ?",o:["Certifiés ISO 9001:2015","Certification en cours","Pas encore certifiés"]},
+ {id:'audit',q:"Quand a lieu votre prochain audit de certification ou de surveillance ?",o:["Dans moins de 6 mois","Dans 6 à 12 mois","Dans plus de 12 mois","Pas d'audit prévu"]}
+];
+const SCORED = [
+ {id:'know',c:"Vue d'ensemble",n:"Connaissance de la version 2026",q:"Votre équipe qualité connaît-elle les changements de la version 2026 ?",
+  o:["Pas encore","Nous en avons entendu parler","Nous avons analysé les écarts","Notre plan de transition est prêt"],
+  gap:"Lancer une analyse d'écarts entre votre système actuel et la version 2026."},
+ {id:'context',c:"Chap. 4 · Contexte",n:"Contexte et enjeux climatiques",q:"Les enjeux liés au changement climatique sont-ils intégrés à votre analyse du contexte et des parties intéressées ?",
+  o:["Non","De façon informelle","Partiellement documentés","Oui, documentés et revus"],
+  gap:"Intégrer les enjeux climatiques à l'analyse du contexte et des parties intéressées."},
+ {id:'culture',c:"Chap. 5 · Leadership",n:"Culture qualité et éthique",q:"La direction promeut-elle de façon visible la culture qualité et le comportement éthique ?",
+  o:["Pas formellement","Ponctuellement","Dans certains services","Oui, avec des actions suivies"],
+  gap:"Formaliser l'engagement de la direction sur la culture qualité et l'éthique."},
+ {id:'risk',c:"Chap. 6 · Planification",n:"Risques et opportunités",q:"Vos risques et opportunités sont-ils traités séparément, avec des actions et un suivi ?",
+  o:["Non","Une liste existe, peu suivie","Oui, mais pas mis à jour","Oui, revus régulièrement"],
+  gap:"Restructurer le traitement des risques et des opportunités, avec actions et suivi."},
+ {id:'change',c:"Chap. 6 · Planification",n:"Planification des changements",q:"Les changements importants (organisation, processus, outils) sont-ils planifiés et maîtrisés ?",
+  o:["Rarement","Au cas par cas","Pour les gros projets","Oui, avec une méthode définie"],
+  gap:"Définir une méthode de planification et de maîtrise des changements."},
+ {id:'aware',c:"Chap. 7 · Support",n:"Sensibilisation du personnel",q:"Vos collaborateurs sont-ils sensibilisés à la culture qualité et à l'éthique ?",
+  o:["Non","Lors de l'accueil uniquement","Certaines équipes","Oui, régulièrement"],
+  gap:"Former et sensibiliser les équipes à la culture qualité et à l'éthique."},
+ {id:'auditors',c:"Chap. 9 · Évaluation",n:"Auditeurs internes",q:"Vos auditeurs internes sont-ils formés à la version 2026 ?",
+  o:["Nous n'avons pas d'auditeurs internes","Formés à la version 2015 uniquement","Formation 2026 prévue","Oui, déjà formés"],
+  gap:"Former vos auditeurs internes aux exigences de la version 2026."}
+];
+const QS = [...PROFILE.map(x=>({...x,type:'p'})),...SCORED.map(x=>({...x,type:'s'}))];
+const S = {step:-1,a:{},lead:{},slot:null};
+const app = document.getElementById('app');
+const esc = v => String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const daysLeft = () => Math.max(0,Math.ceil((DEADLINE-new Date())/864e5));
+
+function intro(){
+ app.innerHTML = `<section class="card hero fade">
+ <h1>Votre entreprise est-elle prête pour ISO 9001:2026 ?</h1>
+ <p class="lead">La nouvelle version est publiée. Tous les certificats ISO 9001:2015 devront être transférés avant le 30 septembre 2029. Faites le point en 3 minutes et recevez votre rapport personnalisé.</p>
+ <div class="facts"><div class="fact"><b>3 min</b><span>pour répondre</span></div><div class="fact"><b>11</b><span>questions</span></div><div class="fact"><b>${daysLeft().toLocaleString('fr-FR')}</b><span>jours avant l'échéance</span></div></div>
+ <div class="seal"><svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20" fill="none" stroke="currentColor" stroke-width="2" opacity=".35"/><path d="M13 22.5l6 6 12-13" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color:var(--blue)"/></svg>
+ <p><b>Ce que vous recevez :</b> votre score de préparation, vos 3 écarts prioritaires, le temps restant avant votre échéance et la prochaine étape adaptée à votre situation.</p></div>
+ <button id="go">Commencer le test</button>
+ </section>`;
+ document.getElementById('go').onclick=()=>{S.step=0;render()};
+}
+
+function question(){
+ const q = QS[S.step], i = S.step, cur = S.a[q.id];
+ app.innerHTML = `<section class="card q fade">
+ <div class="rail"><i style="width:${(i/QS.length*100).toFixed(1)}%"></i></div>
+ <div class="meta"><span>Question ${i+1} sur ${QS.length}</span><span>${q.type==='p'?'Votre profil':'Préparation 2026'}</span></div>
+ ${q.c?`<span class="clause">${esc(q.c)}</span>`:''}
+ <h2>${esc(q.q)}</h2>
+ <p class="hint">${q.type==='p'?'Pour adapter votre rapport à votre situation.':'Répondez selon votre situation actuelle.'}</p>
+ <div class="opts" role="radiogroup">${q.o.map((o,k)=>`<label class="opt${cur===k?' on':''}"><input type="radio" name="o" value="${k}"${cur===k?' checked':''}><span class="dot"></span><span>${esc(o)}</span></label>`).join('')}</div>
+ <div class="nav"><button class="ghost" id="back">Retour</button><button id="next"${cur===undefined?' disabled style="opacity:.45"':''}>${i===QS.length-1?'Voir mon résultat':'Suivant'}</button></div>
+ </section>`;
+ app.querySelectorAll('input[name=o]').forEach(r=>r.addEventListener('change',e=>{
+  S.a[q.id]=+e.target.value;
+  app.querySelectorAll('label.opt').forEach((l,k)=>l.classList.toggle('on',k===S.a[q.id]));
+  const n=document.getElementById('next');n.disabled=false;n.style.opacity='';
+  setTimeout(()=>{if(S.step===i){S.step++;render()}},260);
+ }));
+ document.getElementById('back').onclick=()=>{S.step--;render()};
+ document.getElementById('next').onclick=()=>{if(S.a[q.id]!==undefined){S.step++;render()}};
+}
+
+function capture(){
+ const L=S.lead;
+ app.innerHTML = `<section class="card fade">
+ <div class="rail"><i style="width:100%"></i></div>
+ <h2 style="font-size:clamp(24px,3.4vw,32px);margin-top:18px">Votre rapport est prêt</h2>
+ <p class="small" style="font-size:15px;margin-top:8px">Indiquez où l'envoyer. Un consultant ISO pourra vous contacter pour en discuter.</p>
+ <form id="f" class="form" novalidate>
+ <label>Prénom et nom<input type="text" id="name" autocomplete="name" value="${esc(L.name||'')}"></label>
+ <label>Entreprise<input type="text" id="company" autocomplete="organization" value="${esc(L.company||'')}"></label>
+ <label>Email professionnel<input type="email" id="email" autocomplete="email" value="${esc(L.email||'')}"></label>
+ <label>WhatsApp<input type="tel" id="phone" autocomplete="tel" value="${esc(L.phone||'')}"></label>
+ <label class="consent"><input type="checkbox" id="ok"${L.ok?' checked':''}><span>J'accepte d'être contacté par Alternance Consulting International au sujet de ma transition ISO 9001:2026.</span></label>
+ </form>
+ <p class="err" id="err"></p>
+ <div class="nav"><button class="ghost" id="ex">Remplir avec un exemple</button><button id="see">Afficher mon rapport</button></div>
+ </section>`;
+ document.getElementById('ex').onclick=()=>{
+  Object.assign(document.getElementById('name'),{value:'Salma Bennani'});document.getElementById('company').value='Atlas Agro SARL';
+  document.getElementById('email').value='s.bennani@atlasagro.ma';document.getElementById('phone').value='+212 6 00 00 00 00';document.getElementById('ok').checked=true;
+ };
+ document.getElementById('see').onclick=()=>{
+  const g=id=>document.getElementById(id).value.trim();
+  const l={name:g('name'),company:g('company'),email:g('email'),phone:g('phone'),ok:document.getElementById('ok').checked};
+  const e=document.getElementById('err');
+  if(!l.name||!l.company){e.textContent='Indiquez votre nom et votre entreprise.';return}
+  if(!/^\S+@\S+\.\S+$/.test(l.email)){e.textContent='Indiquez un email valide.';return}
+  if(!l.ok){e.textContent='Cochez la case pour recevoir votre rapport.';return}
+  S.lead=l;S.step=QS.length+1;render();
+ };
+}
+
+function compute(){
+ const per=SCORED.map(q=>({...q,v:S.a[q.id]??0}));
+ const pct=Math.round(per.reduce((s,q)=>s+q.v,0)/(SCORED.length*3)*100);
+ const gaps=[...per].sort((a,b)=>a.v-b.v).slice(0,3);
+ const status=S.a.status, audit=S.a.audit;
+ let level,lc,seg,title,text,cta;
+ if(pct<40){level='Préparation faible';lc='var(--warn)'}else if(pct<75){level='Préparation partielle';lc='var(--blue)'}else{level='Bonne préparation';lc='var(--ok)'}
+ if(status===2){seg='Pas encore certifié';title='Certifiez-vous directement en version 2026';text="Inutile de passer par la version 2015 : un parcours de première certification ISO 9001:2026 vous fait gagner une étape.";cta='Parler de ma première certification'}
+ else if(pct<40&&audit<=1){seg='Priorité haute';title='Votre audit approche : agissons maintenant';text="Votre score et la date de votre prochain audit demandent un plan rapide. Un consultant vous appelle sous 24 h pour cadrer la transition.";cta='Être rappelé sous 24 h'}
+ else if(pct<75){seg='Préparation partielle';title='Diagnostic de transition, 30 minutes';text=`Votre écart principal : ${gaps[0].n.toLowerCase()}. En 30 minutes, un consultant fixe vos priorités et votre calendrier de transition.`;cta='Réserver mon diagnostic gratuit'}
+ else{seg='Bonne préparation';title="Sécurisez votre audit avec un audit à blanc";text="Vous êtes bien avancés. Un audit à blanc confirme votre conformité 2026 avant l'audit réel et évite les mauvaises surprises.";cta='Planifier un audit à blanc'}
+ return {per,pct,gaps,level,lc,seg,title,text,cta};
+}
+
+function report(){
+ const R=compute(),L=S.lead,C=2*Math.PI*70;
+ const col=v=>v<=1?'var(--warn)':v===2?'var(--blue)':'var(--ok)';
+ const slots=['Lun. 10:00','Lun. 15:00','Mar. 11:00','Mer. 09:30','Jeu. 14:00','Ven. 10:30'];
+ const date=new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
+ app.innerHTML = `<section class="card fade">
+ <div class="sheet-head">
+  <div><p class="small" style="margin:0 0 6px">Rapport de préparation · ${esc(date)}</p><h1>${esc(L.company)}</h1>
+  <p>${esc(PROFILE[0].o[S.a.sector])} · ${esc(PROFILE[1].o[S.a.size])} collaborateurs · ${esc(PROFILE[2].o[S.a.status])}</p>
+  <span class="level" style="background:color-mix(in srgb, ${R.lc} 14%, transparent);color:${R.lc}">${R.level}</span></div>
+  <div class="ring" role="img" aria-label="Score de préparation ${R.pct} %"><svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="70" fill="none" stroke="var(--line)" stroke-width="12"/><circle class="prog" cx="80" cy="80" r="70" fill="none" stroke="${R.lc}" stroke-width="12" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C}"/></svg><div class="val"><div><b>${R.pct}%</b><span>prêt pour 2026</span></div></div></div>
+ </div>
+ <div class="grid2">
+  <div class="stat"><b>${daysLeft().toLocaleString('fr-FR')} jours</b><span>avant la fin des certificats 2015 (30 sept. 2029)</span></div>
+  <div class="stat"><b>${esc(PROFILE[3].o[S.a.audit])}</b><span>prochain audit déclaré</span></div>
+ </div>
+ <h3>Votre préparation, exigence par exigence</h3>
+ <div class="bars">${R.per.map(q=>`<div class="bar"><span>${esc(q.n)}</span><div class="t"><i style="width:${Math.max(6,q.v/3*100)}%;background:${col(q.v)}"></i></div><em>${q.v}/3</em></div>`).join('')}</div>
+ <h3>Vos 3 écarts prioritaires</h3>
+ <ol class="gaps">${R.gaps.map(g=>`<li><b>${esc(g.n)} · ${esc(g.c)}</b><span>${esc(g.gap)}</span></li>`).join('')}</ol>
+ <div class="reco"><h3>${esc(R.title)}</h3><p>${esc(R.text)}</p><button id="book">${esc(R.cta)}</button>
+  <div id="cal" class="hide"><div class="slots">${slots.map(s=>`<button data-s="${esc(s)}">${esc(s)}</button>`).join('')}</div><p id="conf" style="margin:0"></p></div></div>
+ <div class="row"><button class="ghost" id="redo">Refaire le test</button><button class="ghost" id="team">Voir ce que reçoit l'équipe ACI</button></div>
+ <div id="lc" class="lead-card hide"><p class="small" style="margin:0 0 10px">Vue interne (démo) : la fiche créée automatiquement pour l'équipe commerciale</p>
+ <table><tbody>
+ <tr><td>Contact</td><td>${esc(L.name)} · ${esc(L.company)}</td></tr>
+ <tr><td>Coordonnées</td><td>${esc(L.email)}${L.phone?' · '+esc(L.phone):''}</td></tr>
+ <tr><td>Profil</td><td>${esc(PROFILE[0].o[S.a.sector])}, ${esc(PROFILE[1].o[S.a.size])} collaborateurs</td></tr>
+ <tr><td>Statut</td><td>${esc(PROFILE[2].o[S.a.status])} · audit ${esc(PROFILE[3].o[S.a.audit].toLowerCase())}</td></tr>
+ <tr><td>Score</td><td>${R.pct} % · ${esc(R.level)}</td></tr>
+ <tr><td>Écarts</td><td>${R.gaps.map(g=>esc(g.n)).join(' · ')}</td></tr>
+ <tr><td>Segment</td><td><b>${esc(R.seg)}</b></td></tr>
+ <tr><td>Suivi automatique</td><td>${esc(R.cta)} · WhatsApp + séquence email adaptée</td></tr>
+ </tbody></table></div>
+ </section>
+ <p class="small" style="text-align:center;margin-top:18px">Rapport indicatif établi à partir de vos réponses ; il ne remplace pas un audit.</p>`;
+ requestAnimationFrame(()=>requestAnimationFrame(()=>{const p=app.querySelector('circle.prog');if(p)p.style.strokeDashoffset=C*(1-R.pct/100)}));
+ document.getElementById('book').onclick=()=>document.getElementById('cal').classList.toggle('hide');
+ app.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{
+  app.querySelectorAll('[data-s]').forEach(x=>x.classList.toggle('on',x===b));
+  document.getElementById('conf').textContent=`Démo : créneau « ${b.dataset.s} » sélectionné. Dans la version réelle, la confirmation part par WhatsApp et email.`;
+ });
+ document.getElementById('team').onclick=()=>document.getElementById('lc').classList.toggle('hide');
+ document.getElementById('redo').onclick=()=>{S.a={};S.step=-1;render()};
+}
+
+function render(){
+ if(S.step<0)intro();else if(S.step<QS.length)question();else if(S.step===QS.length)capture();else report();
+ window.scrollTo({top:0});
+}
+render();
+}
+</script>
+</body>
+</html>
